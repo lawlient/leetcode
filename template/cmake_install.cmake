@@ -1,4 +1,4 @@
-# Install script for directory: /home/lma/workspace/xuja/testPrivate/leetcode
+# Install script for directory: /home/xuja/workspace/leetcode/template
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/lma/workspace/xuja/testPrivate/leetcode/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/xuja/workspace/leetcode/template/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

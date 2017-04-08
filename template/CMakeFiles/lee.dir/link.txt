@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/lee.dir/main.cpp.o  -o lee 

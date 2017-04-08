@@ -1,3 +1,0 @@
-/home/xuja/workspace/leetcode/template/CMakeFiles/rebuild_cache.dir
-/home/xuja/workspace/leetcode/template/CMakeFiles/edit_cache.dir
-/home/xuja/workspace/leetcode/template/CMakeFiles/lee.dir

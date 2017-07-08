@@ -12,6 +12,16 @@
  *  ]
 */
 
+/*  i : 0 -> n - 1
+ *    left = i+1 , right = n - 1
+ *    left ->  <- right
+ *
+ *  O(n ^ 2)
+ *
+ *
+ *
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -22,7 +32,6 @@ class Solution {
 public:
   std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
     std::stable_sort(nums.begin(), nums.end());
-    std::cout << std::endl;
     std::vector<std::vector<int>> res;
     for (size_t i = 0; i < nums.size(); ++i) {
       int target = -nums[i];
@@ -35,10 +44,7 @@ public:
         if (sum < target) front++;
         else if (sum > target) back--;
         else {
-          std::vector<int> triplet(3, 0);
-          triplet[0] = nums[i];
-          triplet[1] = nums[front];
-          triplet[2] = nums[back];
+          std::vector<int> triplet{nums[i], nums[front], nums[back]};
           res.push_back(triplet);
 
           while (front < back && nums[front] == triplet[1]) front++;
@@ -54,7 +60,8 @@ public:
 int main() {
   Solution solute;
   std::vector<int> a{-1, 0, 1, 2, -1, -4};
-  auto res = solute.threeSum(a);
+  std::vector<int> b{1, -1, -1, 0};
+  auto res = solute.threeSum(b);
   std::cout << res.size() << std::endl;
   for (auto r : res) {
     for (auto i : r) {

@@ -9,6 +9,16 @@
  *  ]
 */
 
+/*  n : the number of rest (
+ *  m : the number of rest dismatch (
+ *  we can append a ')' if a '(' is dismatch at least
+ *  we can append a '(' if we have not run out of '('.
+ *
+ *
+ *
+ *
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>

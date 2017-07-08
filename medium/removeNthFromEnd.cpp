@@ -20,21 +20,20 @@ struct ListNode {
 class Solution {
 public:
   ListNode *removeNthFromEnd(ListNode *head, int n) {
+    std::vector<ListNode *> index;
     auto p = head;
-    int length = 0;
     while (p) {
-      length += 1;
+      index.push_back(p);
       p = p->next;
     }
-    if (length == n) return head->next;
-    int i = 0;
-    p = head;
-    while (i <= length - n) {
-      p = p->next;
-      i++;
+    if (n > index.size() || n < 0) {
+      return head;
     }
-    auto remove = p->next;
-    p->next = remove->next;
+    if (n == index.size())
+      return head->next;
+    auto pre = index[index.size() - n - 1];
+    auto node = pre->next;
+    pre->next = node->next;
     return head;
   }
 };

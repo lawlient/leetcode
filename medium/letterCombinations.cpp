@@ -16,17 +16,14 @@ class Solution {
 public:
   std::vector<std::string> letterCombinations(std::string digits) {
     std::vector<std::string> res;
-    if (digits.size() == 0) return res;
+    if (digits.empty()) return res;
     res.push_back("");
-    for (auto d : digits) {
-      int num = d - '0';
+    for (auto &n : digits) {
       std::vector<std::string> tmp;
-      for (auto c : keyboard[num]) {
-        for (auto r : res) {
-          tmp.push_back(r + c);
-        }
-      }
-      std::swap(res, tmp);
+      for (auto &c : keyboard[n - '0'])
+        for (auto &s : res) 
+          tmp.push_back(s+c);
+      tmp.swap(res);
     }
     return res;
   }

@@ -8,7 +8,20 @@
  *  
 */
 
-/*  
+/*  template <class ForwardIterator, class T>
+ *  ForwardIterator remove (ForwardIterator first, ForwardIterator last, const T& val)
+ *  {
+ *    ForwardIterator result = first;
+ *    while (first!=last) {
+ *      if (!(*first == val)) {
+ *        *result = *first;
+ *        ++result;
+ *      }
+ *      ++first;
+ *    }
+ *    return result;
+ *  }
+ *
  *  template <class ForwardIterator, class UnaryPredicate>
  *  ForwardIterator remove_if (ForwardIterator first, ForwardIterator last,
  *                             UnaryPredicate pred) {
@@ -35,7 +48,8 @@
 class Solution {
 public:
   int removeElement(std::vector<int> &nums, int val) {
-    return std::remove_if(nums.begin(), nums.end(), [val](int n){ return val == n; }) - nums.begin();
+    return std::remove(nums.begin(), nums.end(), val) - nums.begin();
+    // return std::remove_if(nums.begin(), nums.end(), [val](int n){ return val == n; }) - nums.begin();
   }
 };
 

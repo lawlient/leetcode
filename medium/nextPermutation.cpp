@@ -10,31 +10,28 @@
  *  
 */
 
+/*  1. find substr of descending order and reverse it and record the number X before the substr 
+ *  2. swap X with first number greater than X in substr
+ *
+*/
+
 #include <iostream>
 #include <climits>
 #include <algorithm>
 #include <vector>
 #include <stack>
 
-/*
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
 class Solution {
 public:
   void nextPermutation(std::vector<int> &nums) {
-    int i;
-    for (i = nums.size() - 2; i >= 0; --i) {
-      if (nums[i] < nums[i + 1]) break;
-    }
-    std::reverse(nums.begin() + i + 1, nums.end());
-    if (i == -1) return;
-    auto itr = std::upper_bound(nums.begin() + i + 1, nums.end(), nums[i]);
-    std::swap(nums[i], *itr);
+    auto i = nums.end() - 1;
+    while (i > nums.begin())
+      if (*(i-1) < *i--) 
+        break;
+    std::reverse(i, nums.end());
+    if (i == nums.begin()) return;
+    auto itr = std::upper_bound(i, nums.end(), *(i-1));
+    std::swap(*(i-1), *itr);
   }
 };
 
@@ -45,7 +42,5 @@ int main() {
   for (auto p : param) {
     std::cout << p << "\t";
   }
-  // auto res = solute.longestValidParentheses("()");
-  // std::cout << res << std::endl;
   return 0;
 }

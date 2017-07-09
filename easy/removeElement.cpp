@@ -13,30 +13,17 @@
 #include <vector>
 #include <map>
 
-/*
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
 class Solution {
 public:
   int removeElement(std::vector<int> &nums, int val) {
-    auto b = nums.begin(), e = nums.end();
-    while (b != e) {
-      if (*b == val) {
-        nums.erase(b);
-        e = nums.end();
-      } else {
-        b++;
-      }
-    }
+    for (auto b = nums.begin(); b != nums.end();) 
+      *b == val ?  nums.erase(b) : b++;
     return nums.size();
   }
 };
 
 int main() {
+  std::vector<int> input{3, 3, 2, 2};
+  std::cout << Solution().removeElement(input, 3) << std::endl;
   return 0;
 }

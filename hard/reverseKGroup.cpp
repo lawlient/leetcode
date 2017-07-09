@@ -39,6 +39,28 @@ class Solution {
   }
 public:
   ListNode *reverseKGroup(ListNode *head, int k) {
+    auto res = ListNode(0);
+    auto r = &res;
+    int length = 0;
+    for (auto p = head; p; p = p->next) 
+      length++;
+    auto p = head;
+    for (int i = 0; i < length/k; i++) {
+      int count = k;
+      auto tail = p;
+      while (count--) {
+        auto node = p;
+        p = p->next;
+        node->next = r->next;
+        r->next = node;
+      }
+      r = tail;
+    }
+    r->next = p;
+    return res.next;
+  }
+
+  ListNode *reverseKGroup2(ListNode *head, int k) {
     auto node=head;
     for (int i=0; i < k; ++i)
       {

@@ -28,8 +28,7 @@ public:
   int divide(int dividend, int divisor) {
     if (divisor == 0 || (dividend == INT_MIN && divisor == -1)) return INT_MAX;
     if (dividend == 0) return 0;
-    bool unsign = ((dividend > 0) && (divisor > 0)) ||
-                  ((dividend < 0) && (divisor < 0));
+    int unsign = ((dividend >> 31) ^ (divisor >> 31)) ? -1 : 1;
     long long m = std::abs((long long)dividend);
     long long n = std::abs((long long)divisor);
     unsigned r = 0;
@@ -43,7 +42,7 @@ public:
       r += c;
       m -= d;
     }
-    return unsign ? r : -r;
+    return unsign * r;
   }
 };
 

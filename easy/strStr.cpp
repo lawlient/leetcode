@@ -13,6 +13,14 @@ class Solution {
 public:
   int strStr(std::string haystack, std::string needle) {
     if (needle.empty()) return 0;
+    auto itr = std::search(haystack.begin(), haystack.end(), needle.begin(), needle.end());
+    if (itr == haystack.end())
+      return -1;
+    return itr - haystack.begin();
+  }
+
+  int strStr2(std::string haystack, std::string needle) {
+    if (needle.empty()) return 0;
     int l = static_cast<int>(haystack.size()) - needle.size() + 1;
     for (int i = 0; i < l; i++) {
       int k = 0;

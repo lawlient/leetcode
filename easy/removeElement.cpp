@@ -8,6 +8,25 @@
  *  
 */
 
+/*  
+ *  template <class ForwardIterator, class UnaryPredicate>
+ *  ForwardIterator remove_if (ForwardIterator first, ForwardIterator last,
+ *                             UnaryPredicate pred) {
+ *    ForwardIterator result = first;
+ *    while (first!=last) {
+ *      if (!pred(*first)) {
+ *        *result = *first;
+ *        ++result;
+ *      }
+ *      ++first;
+ *    }
+ *    return result;
+ *  }
+ *
+ *
+ *
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -16,9 +35,7 @@
 class Solution {
 public:
   int removeElement(std::vector<int> &nums, int val) {
-    for (auto b = nums.begin(); b != nums.end();) 
-      *b == val ?  nums.erase(b) : b++;
-    return nums.size();
+    return std::remove_if(nums.begin(), nums.end(), [val](int n){ return val == n; }) - nums.begin();
   }
 };
 

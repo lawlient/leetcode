@@ -6,6 +6,7 @@
  *    words: ["foo", "bar"]
  *    You should return the indices: [0,9].
  *    (order does not matter). 
+ *
 */
 
 #include <iostream>
@@ -16,25 +17,22 @@
 class Solution {
 public:
   std::vector<int> findSubstring(std::string s, std::vector<std::string> &words) {
-    int length_of_word = words[0].size(), N = words.size();
-    int LAST = s.size() - length_of_word * N + 1;
     std::vector<int> res;
-    for (int i = 0; i < LAST; ++i) {
-      std::map<std::string, int> record;
-      for (auto w : words) {
-        record[w]++;
-      }
+    int wl = words[0].size(), N = words.size(), L = s.size();
+    for (int i = 0; i < L - wl * N + 1; i++) {
+      std::map<std::string, int> index;
+      for (auto &w : words)
+        index[w]++;
 
       int j;
-      for (j = i; j < i + N * length_of_word; j += length_of_word) {
-        auto rec = record.find(s.substr(j, length_of_word));
-        if (rec == record.end()) break;
-        if (rec->second == 0) break;
-        rec->second--;
+      for (j = i; j < i + wl * N; j += wl) {
+        auto w = index.find(s.substr(j, wl));
+        if (w == index.end() || w->second == 0)
+          break;
+        w->second--;
       }
-      if (j == i + N * length_of_word) {
+      if (j == i + wl * N)
         res.push_back(i);
-      }
     }
     return res;
   }

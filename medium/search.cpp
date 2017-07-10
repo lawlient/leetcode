@@ -11,31 +11,21 @@
 #include <vector>
 #include <map>
 
-/*
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
 class Solution {
 public:
   int search(std::vector<int> &nums, int target) {
-    int low = 0, high = nums.size() - 1;
-    while (low < high) {
-      int mid = low + (high - low) / 2;
-      if (nums[mid] > nums[high]) low = mid + 1;
-      else high = mid;
+    int l = 0, r = nums.size() - 1;
+    while (l < r) {
+      auto m = l + (r - l) / 2;
+      nums[m] > nums[r] ? l = m + 1 : r = m;
     }
-    int rotate = low;
-    low = 0, high = nums.size() - 1;
-    while (low <= high) {
-      int mid = low + (high - low) / 2;
-      int realPos = (mid + rotate) % nums.size();
-      if( nums[realPos] == target) return realPos;
-      else if (nums[realPos] < target) low = mid + 1;
-      else high = mid - 1;
+    int rotate = l;
+    l = 0, r = nums.size() - 1;
+    while (l <= r) {
+      auto m = l + (r - l) / 2;
+      auto pos = (m + rotate) % nums.size();
+      if (nums[pos] == target) return pos;
+      nums[pos] < target ? l = m + 1 : r = m - 1;
     }
     return -1;
   }

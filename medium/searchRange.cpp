@@ -24,7 +24,21 @@ struct ListNode {
 
 class Solution {
 public:
+  // O(n)
+  // still accepted
   std::vector<int> searchRange(std::vector<int> &nums, int target) {
+    // O(n)
+    std::vector<int> res(2, -1);
+    auto l = std::find(nums.begin(), nums.end(), target);
+    if (l != nums.end()) {
+      auto r = std::upper_bound(l, nums.end(), target);
+      res[0] = l - nums.begin(), res[1] = r - nums.begin() - 1;
+    }
+    return res;
+  }
+
+  // O(log n)
+  std::vector<int> searchRange2(std::vector<int> &nums, int target) {
     int n = nums.size();
     std::vector<int> ret(2, -1);
     if (!n) return ret;
@@ -40,7 +54,7 @@ public:
     else ret[0] = i;
     
     // Search for the right one
-    j = n - 1;  // We don't have to set i to 0 the second time.
+    j = n - 1;  // We don't have to set i to 0 the second times.
     while (i < j)
     {
         int mid = (i + j) /2 + 1;	// Make mid biased to the right

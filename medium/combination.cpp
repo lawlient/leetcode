@@ -26,14 +26,6 @@
 #include <array>
 #include <bitset>
 
-/*
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
 class Solution {
   void combinationSum(std::vector<int> &candidates, int target, std::vector<std::vector<int>> &res,
                       std::vector<int> &combination, int begin) {

@@ -7,6 +7,12 @@
  *  
 */
 
+/*  n should at array[n-1]
+ *  we should find first n != array[n-1]
+ *
+ *
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>

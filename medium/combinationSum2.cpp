@@ -26,35 +26,27 @@
 #include <array>
 #include <bitset>
 
-/*
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
 class Solution {
-  void findCombination(std::vector<std::vector<int>> &res, const int order, const int target,
-                       std::vector<int> &local, const std::vector<int> &num) {
-    if (!target) {
-      res.push_back(local);
+  void recursiveCombinate(std::vector<std::vector<int>> &res, int begin, int target, 
+                          std::vector<int> &r, const std::vector<int> &candidates) {
+    if (target == 0) {
+      res.push_back(r);
       return;
     }
-    for (size_t i = order; i < num.size(); ++i) {
-      if (num[i] > target) return ;
-      if (i > order && num[i] == num[i-1]) continue;
-      local.push_back(num[i]);
-      findCombination(res, i+1, target-num[i], local, num);
-      local.pop_back();
+    for (int i = begin; i < candidates.size(); i++) {
+      if (candidates[i] > target) return;
+      if (i > begin && candidates[i] == candidates[i-1]) continue;
+      r.push_back(candidates[i]);
+      recursiveCombinate(res, i+1, target-candidates[i], r, candidates);
+      r.pop_back();
     }
- }
+  }
 public:
-  std::vector<std::vector<int>> combinationSum2(std::vector<int> &candidates, int target) {
+  std::vector<std::vector<int>> combinationSum(std::vector<int> &candidates, int target) {
     std::sort(candidates.begin(), candidates.end());
     std::vector<std::vector<int>> res;
-    std::vector<int> local;
-    findCombination(res, 0, target, local, candidates);
+    std::vector<int> r;
+    recursiveCombinate(res, 0, target, r, candidates);
     return res;
   }
 };

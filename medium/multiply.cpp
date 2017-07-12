@@ -33,10 +33,9 @@ public:
     for (auto i : reverse) {
       r_res += i + '0';
     }
-    std::string res;
-    auto begin = r_res.begin();
-    std::reverse_copy(begin, begin+r_res.find_last_not_of('0')+1, std::back_inserter(res));
-    return res;
+    std::reverse(r_res.begin(), r_res.end());
+    auto pos = r_res.find_first_not_of('0');
+    return r_res.substr(pos, r_res.size() - pos);
   }
 };
 

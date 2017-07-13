@@ -24,13 +24,13 @@
 class Solution {
 public:
   bool isMatch(std::string s, std::string p) {
-    int s_l = s.length(), p_l = p.length();
+    int pl = p.length();
     int i = 0, j = 0, star = -1, match = 0;
-    while (i < s_l) {
-      if (j < p_l && p[j] == '*') {
+    while (i < s.length()) {
+      if (j < pl && p[j] == '*') {
         match = i;
         star = j++;
-      } else if (j < p_l && (p[j] == '?' || p[j] == s[i])) {
+      } else if (j < pl && (p[j] == '?' || p[j] == s[i])) {
         i++;
         j++;
       } else if (star >= 0) {
@@ -40,10 +40,10 @@ public:
         return false;
       }
     }
-    while (j < p_l && p[j] == '*') {
+    while (j < pl && p[j] == '*') {
       j++;
     }
-    return j == p_l;
+    return j == pl;
   }
 };
 

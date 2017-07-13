@@ -1,8 +1,23 @@
-/*   Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+/*   Given n non-negative integers representing an elevation map where the width of each bar is 1,
+ *   compute how much water it is able to trap after raining.
  *   For example,
  *
  *   Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6. 
  *  
+*/
+
+/*  4 pointers 
+ *    left : point to current left position
+ *    maxLeft : reserve current max left
+ *    right : point to current right position
+ *    maxRight : reserve current max right
+ *
+ *  we just move the point of short one every step
+ *  if current position shorter than max one
+ *  then trap more water
+ *  else update max point
+ *
+ *
 */
 
 #include <iostream>

@@ -55,8 +55,52 @@ class Solution {
       }
     }
   }
+  bool isValid(const std::vector<int> &one, int i, int j) {
+    int k = 0;
+    while (k < i) {
+      if (one[k] == j || std::abs(i - k) == std::abs(j - one[k]))
+        return false;
+      k++;
+    }
+    return true;
+  }
 public:
+  //non-recursive
   std::vector<std::vector<std::string>> solveNQueens(int n) {
+    std::vector<std::vector<std::string>> result;
+    std::vector<int> one(n, -1);
+    int i = 0, j = 0;
+    while (i < n) {
+      while( j < n) {
+        if (isValid(one, i, j)) {
+          one[i] = j;
+          if (i == n-1) {
+            std::vector<std::string> solve(n, std::string(n, '.'));
+            for (int k = 0; k < n; k++) solve[k][one[k]] = 'Q';
+            result.push_back(solve);
+            j = one[i]+1;
+          }
+          else {
+            j = 0;
+            break;
+          }
+        } else {
+          j++;
+        }
+      }
+      if (j == n) {
+        i--;
+        if (i < 0) break;
+        j = one[i]+1;
+        continue;
+      }
+      i++;
+    }
+    return result;
+  }
+
+  // recursive
+  std::vector<std::vector<std::string>> solveNQueens2(int n) {
     std::vector<std::string> s(n, std::string(n, '.'));
     std::vector<std::vector<std::string>> result;
     solve(result, s, 0, n);

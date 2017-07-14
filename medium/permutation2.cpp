@@ -16,24 +16,24 @@
 #include <map>
 
 class Solution {
-  void permutationRecursive(std::vector<int> nums, int begin, std::vector<std::vector<int>> &result) {
-    if (begin >= static_cast<int>(nums.size()) - 1) {
-      result.push_back(nums);
+  void help(std::vector<std::vector<int>> &res, int begin, std::vector<int> nums) {
+    if (begin == nums.size() - 1) {
+      res.push_back(nums);
       return;
     }
-
-    for (int i = begin; i < static_cast<int>(nums.size()); ++i) {
-      if (i != begin && nums[begin] == nums[i]) continue;
-      std::swap(nums[begin], nums[i]);
-      permutationRecursive(nums, begin+1, result);
+    help(res, begin+1, nums);
+    for (int i = begin+1; i < nums.size(); i++) {
+      if(nums[i] == nums[begin]) continue;
+      std::swap(nums[i], nums[begin]);
+      help(res, begin+1, nums);
     }
   }
 public:
   std::vector<std::vector<int>> permutation(std::vector<int> &nums) {
     std::sort(nums.begin(), nums.end());
-    std::vector<std::vector<int>> result;
-    permutationRecursive(nums, 0, result);
-    return result;
+    std::vector<std::vector<int>> res;
+    help(res, 0, nums);
+    return res;
   }
 };
 

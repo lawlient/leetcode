@@ -2,6 +2,14 @@
  *  
 */
 
+/*  bit operator:
+ *  for example : x = 2 , n = 5(101);
+ *  pow(2, 5) = 1 * (2)1 * (2)0 * (2)4
+ *  if n < 0, then x = 1/x, n = -n;
+ *
+ *
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>

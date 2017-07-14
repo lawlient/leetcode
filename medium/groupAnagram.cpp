@@ -20,13 +20,13 @@ class Solution {
 public:
   std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string> &strs) {
     std::unordered_map<std::string, std::vector<std::string>> mp;
-    for (auto s : strs) {
-      std::string tmp = s;
-      std::sort(tmp.begin(), tmp.end());
-      mp[tmp].push_back(s);
+    for (const auto &s : strs) {
+      auto backup = s;
+      std::sort(backup.begin(), backup.end());
+      mp[backup].push_back(s);
     }
     std::vector<std::vector<std::string>> res;
-    for (auto r : mp) {
+    for (const auto &r : mp) {
       res.push_back(r.second);
     }
     return res;

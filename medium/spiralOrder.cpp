@@ -21,7 +21,7 @@
 class Solution {
 public:
   std::vector<int> spiralOrder(std::vector<std::vector<int>> &matrix) {
-    if (matrix.size() == 0) return std::vector<int>();
+    if (matrix.empty()) return std::vector<int>();
     int x = 0, y = -1, m = matrix.size(), n = matrix[0].size();
     int row = m, col = n;
     unsigned dir = 0;

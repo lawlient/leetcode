@@ -22,6 +22,20 @@ struct Interval {
 class Solution {
 public:
   std::vector<Interval> merge(std::vector<Interval> &intervals) {
+    if (intervals.empty()) return intervals;
+    auto compare = [](const Interval &l, const Interval &r) { return l.start < r.start; };
+    std::sort(intervals.begin(), intervals.end(), compare);
+    for (auto b = intervals.begin(); b < intervals.end()-1;) {
+      if (b->end >= (b+1)->start) {
+        b->end = std::max(b->end, (b+1)->end);
+        intervals.erase(b+1);
+      } else
+        b++;
+    }
+    return intervals;
+  }
+
+  std::vector<Interval> merge2(std::vector<Interval> &intervals) {
     std::vector<Interval> res;
     if (intervals.size() == 0) return res;
     std::sort(intervals.begin(), intervals.end(), [](Interval a, Interval b) { return a.start < b.start; });

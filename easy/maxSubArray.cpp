@@ -14,14 +14,6 @@
 #include <array>
 #include <bitset>
 
-/*
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
 class Solution {
 public:
   int maxSubArray(std::vector<int> &nums) {
@@ -29,7 +21,7 @@ public:
     for (size_t i = 0; i < nums.size(); i++) {
       sum += nums[i];
       ans = std::max(ans, sum);
-      sum = std::max(sum, 0);
+      if (sum < 0) sum = 0;
     }
     return ans;
   }

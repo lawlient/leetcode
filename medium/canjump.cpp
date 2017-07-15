@@ -18,17 +18,13 @@
 class Solution {
 public:
   bool canjump(std::vector<int> &nums) {
-    int n = nums.size();
-    if (n < 2) return true;
-    int begin = 0, end = 0;
-    for (int i = begin; i <= end; i++) {
-      if (i + nums[i] > end) {
-        end = i + nums[i];
-        if (end >= n - 1)
-          return true;
-      }
+    int b = 1,  e = nums[0];
+    for (int i = b; i <= e; i++) {
+      e = std::max(nums[i]+i, e);
+      if (e+1 >= nums.size())
+        return true;
     }
-    return false;
+    return e+1 == nums.size();
   }
 };
 

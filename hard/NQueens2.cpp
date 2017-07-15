@@ -25,40 +25,65 @@
 #include <unordered_map>
 
 class Solution {
-  bool isValid(const std::vector<std::string> &s, 
-               const int &row, const int &col, const int &n) {
-    for (int i = 0; i < row; i++)
-      if (s[i][col] == 'Q')
+  bool isValid(const std::vector<int> &one, int i, int j) {
+    int k = 0;
+    while (k < i) {
+      if (one[k] == j || std::abs(one[k] - j) == std::abs(i - k))
         return false;
-
-    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j)
-      if (s[i][j] == 'Q')
-        return false;
-
-    for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j)
-      if (s[i][j] == 'Q')
-        return false;
+      k++;
+    }
     return true;
   }
 
-  void solve(int &count, std::vector<std::string> &s, int i, int n) {
+  void findSolve(std::vector<int> &one, int i, int &count, int n) {
     if (i == n) {
       count++;
-      return ;
+      return;
     }
-    for (int column = 0; column < n; column++) {
-      if (isValid(s, i, column, n)) {
-        s[i][column] = 'Q';
-        solve(count, s, i+1, n);
-        s[i][column] = '.';
+    for (int j = 0; j < n; j++) {
+      one[i] = j;
+      if (isValid(one, i, j)) {
+        findSolve(one, i+1, count, n);
       }
     }
   }
 public:
-  int solveNQueens(int n) {
-    std::vector<std::string> s(n, std::string(n, '.'));
+  // non-recursive
+  int totalNQueens(int n) {
     int count = 0;
-    solve(count, s, 0, n);
+    std::vector<int> one(n, -1);
+    int row = 0, col = 0;
+    while (row < n) {
+      while (col < n) {
+        if (isValid(one, row, col)) {
+          one[row] = col;
+          if (row == n-1) {
+            count++;
+            col++;
+          } else {
+            col = 0;
+            break;
+          }
+        } else {
+          col++;
+        }
+      }
+      if (col == n) {
+        row--;
+        if (row < 0) break;
+        col = one[row]+1;
+        continue;
+      }
+      row++;
+    }
+    return count;
+  }
+
+  // recursive
+  int solveNQueens(int n) {
+    int count = 0;
+    std::vector<int> one(n, -1);
+    findSolve(one, 0, count, n);
     return count;
   }
 };

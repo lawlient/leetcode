@@ -19,6 +19,13 @@
 class Solution {
 public:
   int lengthOfLastWord(std::string s) {
+    int length = 0, k = s.size() - 1;
+    while (k >= 0 && s[k] == ' ') k--;
+    while (k >= 0 && s[k--] != ' ') length++;
+    return length;
+  }
+
+  int lengthOfLastWord2(std::string s) {
     int length = s.size();
     int pos = s.find_last_not_of(' ', length);
     if (pos == -1) return 0;

@@ -27,16 +27,16 @@ class Solution {
 public:
   std::vector<Interval> insert(std::vector<Interval> &intervals, Interval newInterval) {
     intervals.push_back(newInterval);
-    std::vector<Interval> res;
-    std::sort(intervals.begin(), intervals.end(), [](Interval a, Interval b) { return a.start < b.start; });
-    res.push_back(intervals[0]);
-    for (size_t i = 1; i < intervals.size(); ++i) {
-      if (res.back().end < intervals[i].start)
-        res.push_back(intervals[i]);
-      else 
-        res.back().end = std::max(res.back().end, intervals[i].end);
+    auto compare = [](const Interval &l, const Interval &r) { return l.start < r.start; };
+    std::sort(intervals.begin(), intervals.end(), compare);
+    for (auto b = intervals.begin(); b < intervals.end() - 1;) {
+      if (b->end >= (b+1)->start) {
+        b->end = std::max(b->end, (b+1)->end);
+        intervals.erase(b+1);
+      } else 
+        b++;
     }
-    return res;
+    return intervals;
   }
 };
 

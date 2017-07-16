@@ -32,6 +32,21 @@ public:
       f /= n - i;
       int j = i + k/f;
       char c = s[j];
+      s.erase(j, 1);
+      s.insert(i, 1, c);
+      k %= f;
+    }
+    return s;
+  }
+  std::string getPermutation2(int n, int k) {
+    std::string s(std::string("123456789").substr(0, n));
+    int f = 1;
+    for (int i = 0; i < n; i++) f *= i+1;
+    k--;
+    for (int i = 0; i < n; i++) {
+      f /= n - i;
+      int j = i + k/f;
+      char c = s[j];
       while (j > i) {
         s[j] = s[j-1];
         j--;

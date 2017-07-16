@@ -17,6 +17,21 @@
 class Solution {
 public:
   std::string addBinary(std::string a, std::string b) {
+    int al = a.length(), bl = b.length(), k = std::max(al, bl)+1;
+    std::string res(k, '0');
+    int c = 0;
+    for (int i = al, j = bl; i || j;) {
+      if (i) c += a[--i] - '0';
+      if (j) c += b[--j] - '0';
+      res[--k] = c & 1 ? '1' : '0';
+      c = c > 1 ? 1 : 0;
+    }
+    if (c) res[--k] = '1';
+    else res.erase(res.begin());
+    return res;
+  }
+
+  std::string addBinary2(std::string a, std::string b) {
     int i = a.size()-1, j = b.size()-1;
     int c = 0;
     std::string res("");

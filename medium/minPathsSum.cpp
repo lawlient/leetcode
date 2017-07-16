@@ -20,11 +20,9 @@ public:
     mem[0][0] = grid[0][0];
     for (size_t i = 1; i < n; i++) mem[0][i] = grid[0][i] + mem[0][i-1];
     for (size_t i = 1; i < m; i++) mem[i][0] = grid[i][0] + mem[i-1][0];
-    for (size_t i = 1; i < m; i++) {
-      for (size_t j = 1; j < n; j++) {
+    for (size_t i = 1; i < m; i++)
+      for (size_t j = 1; j < n; j++)
         mem[i][j] = grid[i][j] + std::min(mem[i-1][j], mem[i][j-1]);
-      }
-    }
     return mem[m-1][n-1];
   }
 };

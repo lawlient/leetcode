@@ -19,15 +19,14 @@
 class Solution {
 public:
   int climbStairs(int n) {
-    if (n < 3) return n;
-    int x = 1, y = 2, f = x + y;
-    while (n > 3) {
-      x = y;
-      y = f;
-      f = x + y;
-      n--;
+    if (n <= 3) return n;
+    int i = 2, j = 3;
+    n = n - 3;
+    while (n--) {
+      j = i + j;
+      i = j - i;
     }
-    return f;
+    return j;
   }
 };
 

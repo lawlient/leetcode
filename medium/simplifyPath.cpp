@@ -1,4 +1,4 @@
-/*  Given an absolute path for a file (Unix-style), simplify it.
+/*  Given an ABSOLUTE path for a file (Unix-style), simplify it.
  *
  *  For example,
  *  path = "/home/", => "/home"
@@ -17,7 +17,7 @@ class Solution {
 public:
   std::string simplifyPath(std::string path) {
     std::vector<std::string> p;
-    for (size_t b = 0; b < path.size();)  {
+    for (size_t b = 0; b < path.length();)  {
       size_t next = path.find_first_of('/', b+1);
       std::string s = path.substr(b, next-b);
       if (s == "/." || s == "/") ;
@@ -30,7 +30,7 @@ public:
       b = next;
     }
     std::string res;
-    for (auto s : p) {
+    for (const auto &s : p) {
       res += s;
     }
     if (res == "") res = "/";

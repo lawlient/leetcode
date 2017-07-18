@@ -20,11 +20,11 @@
 class Solution {
 public:
   void sortColors(std::vector<int> &nums) {
-    int n = nums.size();
-    int last0 = 0, first2 = n - 1;
-    for (int i = 0; i <= first2; i++) {
-      while (nums[i] == 2 && i < first2) std::swap(nums[i], nums[first2--]);
-      while (nums[i] == 0 && i > last0) std::swap(nums[i], nums[last0++]);
+    int i = 0, j = nums.size() - 1, k = 0;
+    while (k <= j) {
+      while (nums[k] == 2 && k < j) std::swap(nums[k], nums[j--]);
+      while (nums[k] == 0 && k > i) std::swap(nums[k], nums[i++]);
+      k++;
     }
   }
 };

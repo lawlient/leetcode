@@ -22,23 +22,22 @@
 #include <map>
 
 class Solution {
-  void combineRecursive(std::vector<std::vector<int>> &res, std::vector<int> &com, int i, int n, int k) {
-    if (com.size() == k) {
-      res.push_back(com);
+  void combineRecursive(std::vector<std::vector<int>> &res, std::vector<int> &one, int i, int n, int k) {
+    if (one.size() == k) {
+      res.push_back(one);
       return;
     }
     for (; i <= n; i++) {
-      com.push_back(i);
-      combineRecursive(res, com, i+1, n, k);
-      com.pop_back();
+      one.push_back(i);
+      combineRecursive(res, one, i + 1, n, k);
+      one.pop_back();
     }
-    return;
   }
 public:
   std::vector<std::vector<int>> combine(int n, int k) {
     std::vector<std::vector<int>> res;
-    std::vector<int> com;
-    combineRecursive(res, com, 1, n, k);
+    std::vector<int> one;
+    combineRecursive(res, one, 1, n, k);
     return res;
   }
 };
@@ -46,8 +45,8 @@ public:
 int main() {
   Solution solute;
   auto res = solute.combine(4, 2);
-  for (auto s : res) {
-    for (auto i : s) {
+  for (const auto &s : res) {
+    for (const auto &i : s) {
       std::cout << i << "\t";
     }
     std::cout << "\n";

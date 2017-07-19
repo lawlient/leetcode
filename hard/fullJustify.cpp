@@ -29,21 +29,20 @@
 class Solution {
 public:
   std::vector<std::string> fullJustify(std::vector<std::string> &words, int maxWidth) {
-    std::vector<std::string> res;
+    std::vector<std::string> res, line;
     int l = 0;
-    std::vector<std::string> line;
     for (size_t i = 0; i < words.size(); i++) {
-      if (l + words[i].size() + line.size() > maxWidth) {
+      if (l + line.size() + words[i].size() > maxWidth) {
         std::string tmp("");
         if (line.size() == 1) {
-          tmp = line[0] + std::string(maxWidth-line[0].size(), ' ');
+          tmp = line[0] + std::string(maxWidth-line[0].length(), ' ');
         } else {
           int spaceN = maxWidth - l;
           int aver = spaceN / (line.size() - 1);
           for (size_t j = 0; j < line.size() - 1; j++) { line[j] += std::string(aver, ' '); }
-          l = l + aver * (line.size() - 1);
-          for (int j = 0; j < maxWidth - l; j++) { line[j] += ' '; }
-          for (auto s : line) { tmp += s; }
+          int resSpaceN = maxWidth - l - aver * (line.size() - 1);
+          for (int j = 0; j < resSpaceN; j++) { line[j] += ' '; }
+          for (const auto &s : line) { tmp += s; }
         }
         res.push_back(tmp);
         l = 0;
@@ -54,7 +53,7 @@ public:
     }
     if (!line.empty()) {
       std::string tmp("");
-      for (auto s : line) { tmp += s + ' '; }
+      for (const auto &s : line) { tmp += s + ' '; }
       tmp += std::string(maxWidth, ' ');
       res.push_back(tmp.substr(0, maxWidth));
     }

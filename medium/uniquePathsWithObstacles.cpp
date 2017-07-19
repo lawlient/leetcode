@@ -13,6 +13,13 @@
  *  
 */
 
+/* dp :
+ *   m[i][j] = m[i-1][j] + m[i][j-1]
+ *
+ *
+ *
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -25,13 +32,10 @@ public:
     size_t m = obstacleGrid.size(), n = obstacleGrid[0].size();
     std::vector<std::vector<int>> record(m+1, std::vector<int>(n+1, 0));
     record[0][1] = 1;
-    for (size_t i = 1; i <= m; i++) {
-      for (size_t j = 1; j <= n; j++) {
-        if (!obstacleGrid[i-1][j-1]) {
+    for (size_t i = 1; i <= m; i++)
+      for (size_t j = 1; j <= n; j++)
+        if (!obstacleGrid[i-1][j-1])
           record[i][j] = record[i-1][j] + record[i][j-1];
-        }
-      }
-    }
     return record[m][n];
   }
 };

@@ -15,11 +15,9 @@ public:
     int m = matrix.size(), n = matrix[0].size();
     int last_exist_0_row = -1;
     for (int i = m - 1; i >= 0 && last_exist_0_row == -1; i--) {
-      for (auto e : matrix[i]) {
-        if (e == 0) {
-          last_exist_0_row = i;
-          break;
-        }
+      if (std::count(matrix[i].begin(), matrix[i].end(), 0)) {
+        last_exist_0_row = i;
+        break;
       }
     }
     if (last_exist_0_row == -1) return;
@@ -32,10 +30,8 @@ public:
           exist_0 = true;
         }
       }
-      if (exist_0) {
-        for (auto &e : matrix[i]) 
-          e = 0;
-      }
+      if (exist_0)
+        std::fill(matrix[i].begin(), matrix[i].end(), 0);
     }
 
     for (int j = 0; j < n; j++) {
@@ -46,8 +42,7 @@ public:
       }
     }
 
-    for (auto &e : matrix[last_exist_0_row])
-      e = 0;
+    std::fill(matrix[last_exist_0_row].begin(), matrix[last_exist_0_row].end(), 0);
   }
 };
 

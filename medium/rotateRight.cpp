@@ -24,17 +24,15 @@ public:
   ListNode *rotateRight(ListNode *head, int k) {
     if (!head) return head;
     size_t length = 1;
-    ListNode *p = head;
+    auto *p = head;
     while (p->next) {
       length++;
       p = p->next;
     }
     p->next = head;
-    k = length - k & length;
-    while (k) {
+    k = length - k%length;
+    while (k-- > 0)
       p = p->next;
-      k--;
-    }
     head = p->next;
     p->next = NULL;
     return head;

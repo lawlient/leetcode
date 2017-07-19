@@ -28,15 +28,15 @@
 class Solution {
 public:
   bool searchMatrix(std::vector<std::vector<int>> &matrix, int target) {
-    if (matrix.size() == 0) return false;
+    if (matrix.empty()) return false;
     int m = matrix.size(), n = matrix[0].size();
     int l = 0, r = m * n - 1;
     while (l <= r) {
       int mid = l + (r - l) / 2;
-      int x = mid / n, y = mid % n;
-      if (matrix[x][y] > target) r = mid - 1;
-      else if (matrix[x][y] < target) l = mid + 1;
-      else return true;
+      int M = matrix[mid / n][mid % n];
+      if (M == target) return true;
+      if (M < target) l = mid + 1;
+      else r = mid - 1;
     }
     return false;
   }

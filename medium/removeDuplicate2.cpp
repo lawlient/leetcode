@@ -18,17 +18,18 @@
 
 class Solution {
 public:
+  // tivial
   int removeDuplicates(std::vector<int> &nums) {
-    for (auto i = nums.begin(); i < nums.end(); ++i) {
-      for (auto j = i + 1; j < nums.end(); j++) {
-        if (*j != *i) break;
-        if (j - i > 1) nums.erase(j--);
-      }
-      while (i < nums.end() && *i == *(i+1)) i++;
+    for (int i = 0; i < nums.size() - 1; i++) {
+      if (nums[i] != nums[i+1]) continue;
+      i++;
+      while (nums[i] == nums[i+1])
+        nums.erase(i+1+nums.begin());
     }
     return nums.size();
   }
 
+  // pretty
   int removeDuplicates2(std::vector<int> &nums) {
     int n = nums.size(), count = 0;
     for (int i = 2; i < n; i++) {

@@ -1,7 +1,7 @@
 /*  Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
  *  (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
  *  Write a function to determine if a given target is in the array.
- *  The array may contain duplicates.
+ *  The array may contain DUPLICATES.
  *  
  *  
 */
@@ -19,11 +19,11 @@ public:
   bool search(std::vector<int> &nums, int target) {
     int n = nums.size();
     if (n == 0) return false;
-    int l = 0, r = n - 1, mid = 0;
+    int l = 0, r = n - 1;
     while (l < r) {
-      mid = l + (r - l) / 2;
+      int mid = l + (r - l) / 2;
       if (nums[mid] == target) return true;
-      else if (nums[mid] > nums[r]) {
+      if (nums[mid] > nums[r]) {
         if (nums[mid] > target && nums[l] <= target)
           r = mid;
         else 

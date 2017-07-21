@@ -28,30 +28,27 @@
 class Solution {
   int m;
   int n;
-  std::string s;
-  bool isvalid(std::vector<std::vector<char>> &board,
-               int i, int x, int y) {
-    if (x < 0 || y < 0 || x >= m || y >= n || board[x][y] == '\0' || s[i] != board[x][y])
-      return false;
-    if (s[i+1] == '\0')
-      return true;
-    char t = board[x][y];
+  bool help(std::vector<std::vector<char>> &board, const std::string &word, 
+            int i, int x, int y) {
+    if (i == word.size()) return true;
+    if (x < 0 || x >= m || y < 0 || y >= n || word[i] != board[x][y]) return false;
+    char c = board[x][y];
     board[x][y] = '\0';
-    if (isvalid(board, i+1, x-1, y) ||
-        isvalid(board, i+1, x+1, y) ||
-        isvalid(board, i+1, x, y-1) ||
-        isvalid(board, i+1, x, y+1))
+    if (help(board, word, i+1, x-1, y) ||
+        help(board, word, i+1, x+1, y) ||
+        help(board, word, i+1, x, y-1) ||
+        help(board, word, i+1, x, y+1))
       return true;
-    board[x][y] = t;
+    board[x][y] = c;
     return false;
   }
 public:
   bool exist(std::vector<std::vector<char>> &board, std::string word) {
-    m = board.size(), n = board[0].size(), s = word;
-    for (int x = 0; x < m; x++) {
-      for (int y = 0; y < n; y++) {
-        if (isvalid(board, 0, x, y))
-            return true;
+    m = board.size(), n = board[0].size();
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (help(board, word, 0, i, j))
+          return true;
       }
     }
     return false;

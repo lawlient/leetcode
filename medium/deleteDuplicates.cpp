@@ -23,17 +23,13 @@ struct ListNode {
 class Solution {
 public:
   ListNode *deleteDuplicates(ListNode *head) {
-    ListNode newH(0);
-    auto p = &newH;
-    while (head) {
-      int v = head->val;
-      p = p->next = head;
-      head = head->next;
-      while (head && head->val == v)
-        head = head->next;
+    auto h = head;
+    while (h) {
+      auto r = h->next;
+      while (r && r->val == h->val) r = r->next;
+      h = h->next = r;
     }
-    p->next = nullptr;
-    return newH.next;
+    return head;
   }
 };
 

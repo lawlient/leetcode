@@ -25,6 +25,28 @@ struct ListNode {
 class Solution {
 public:
   ListNode *deleteDuplicates(ListNode *head) {
+    auto node = ListNode(0);
+    auto r = &node;
+    auto h = head;
+    while (h) {
+      auto n = h->next;
+      if (!n) {
+        r->next = h;
+        break;
+      }
+      if (n->val != h->val) {
+        r = r->next = h;
+        h = h->next;
+        r->next = nullptr;
+        continue;
+      }
+      while (n && n->val == h->val) n = n->next;
+      h = n;
+    }
+    return node.next;
+  }
+
+  ListNode *deleteDuplicates2(ListNode *head) {
     ListNode newH(0);
     auto p = &newH;
     while (head) {

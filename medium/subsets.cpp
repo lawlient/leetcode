@@ -26,25 +26,26 @@
 #include <map>
 
 class Solution {
-  void combineRecursive(std::vector<std::vector<int>> &res, std::vector<int> &com,
-                        const std::vector<int> &nums, int i, int k) {
-    if (com.size() == k) {
-      res.push_back(com);
+  void help(std::vector<std::vector<int>> &res, std::vector<int> &subset, 
+            const std::vector<int> &nums, int i, int n, int k) {
+    if (subset.size() == k) {
+      res.push_back(subset);
       return;
     }
-    for (; i < nums.size(); i++) {
-      com.push_back(nums[i]);
-      combineRecursive(res, com, nums, i+1, k);
-      com.pop_back();
+    for (; i < n; i++) {
+      subset.push_back(nums[i]);
+      help(res, subset, nums, i+1, n, k);
+      subset.pop_back();
     }
-    return;
   }
 public:
   std::vector<std::vector<int>> subsets(std::vector<int> &nums) {
-    std::vector<std::vector<int>> res;
-    std::vector<int> com;
-    for (size_t i = 0; i <= nums.size(); i++) {
-      combineRecursive(res, com, nums, 0, i);
+    std::vector<int> subset;
+    std::vector<std::vector<int>> res{subset};
+    int size = nums.size();
+    if (size == 0) return res;
+    for (int k = 1; k <= size; k++) {
+      help(res, subset, nums, 0, size, k);
     }
     return res;
   }

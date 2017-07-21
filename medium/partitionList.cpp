@@ -26,21 +26,19 @@ struct ListNode {
 class Solution {
 public:
   ListNode *partition(ListNode *head, int x) {
-    ListNode node1(0), node2(0);
-    auto p = &node1;
-    auto q = &node2;
-    while (head) {
-      if (head->val < x) {
-        p->next = head;
-        p = p->next;
+    auto node1 = ListNode(0); auto r1 = &node1;
+    auto node2 = ListNode(0); auto r2 = &node2;
+    auto h = head;
+    while (h) {
+      if (x > h->val) {
+        r1 = r1->next = h;
       } else {
-        q->next = head;
-        q = q->next;
+        r2 = r2->next = h;
       }
-      head = head->next;
+      h = h->next;
     }
-    q->next = nullptr;
-    p->next = node2.next;
+    r1->next = node2.next;
+    r2->next = nullptr;
     return node1.next;
   }
 };

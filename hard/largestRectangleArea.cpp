@@ -10,11 +10,22 @@
  *  
 */
 
+/*  we append a zero height at tail of heights in order to calculate all area
+ *  std::stack<int> index; record index in heights
+ *  the height is ascending order in stack all the time
+ *  we just calculate area when the current height less than the height of stack top index;
+ *  
+ *
+ *
+ *
+*/
+
 #include <iostream>
 #include <climits>
 #include <assert.h>
 #include <algorithm>
 #include <vector>
+#include <stack>
 #include <array>
 #include <math.h>
 
@@ -22,21 +33,22 @@ class Solution {
 public:
   int largestRectangleArea(std::vector<int> &heights) {
     heights.push_back(0);
-    int minArea = 0;
-    std::vector<int> index;
+    int maxArea = 0;
+    std::stack<int> index;
     for (int i = 0; i < heights.size(); i++) {
-      while (!index.empty() && heights[index.back()] >= heights[i]) {
-        int h = heights[index.back()];
-        index.pop_back();
+      // the loop to calculate all area at left of index i
+      while (!index.empty() && heights[index.top()] > heights[i]) {
+        int h = heights[index.top()];
+        index.pop();
 
-        int pos = index.empty() ? -1 : index.back();
-        if (h * (i - pos - 1) > minArea) {
-          minArea = h * (i - pos - 1);
+        int pos = index.empty() ? -1 : index.top();
+        if (h * (i - pos - 1) > maxArea) {
+          maxArea = h * (i - pos - 1);
         }
       }
-      index.push_back(i);
+      index.push(i);
     }
-    return minArea;
+    return maxArea;
   }
 };
 

@@ -15,6 +15,23 @@
  *  
 */
 
+/*  0 00
+ *  0 01 
+ *
+ *  0 11
+ *  0 10
+ *
+ *  1 10
+ *  1 11
+ *  1 01
+ *  1 00
+ *
+ *
+ *
+ *
+ *
+*/
+
 #include <iostream>
 #include <climits>
 #include <assert.h>
@@ -26,8 +43,7 @@
 class Solution {
 public:
   std::vector<int> grayCode(int n) {
-    std::vector<int> res;
-    res.push_back(0);
+    std::vector<int> res{0};
     for (int i = 0; i < n; i++)
       for (int k = res.size() - 1; k >= 0; k--)
         res.push_back(res[k] | 1<<i);

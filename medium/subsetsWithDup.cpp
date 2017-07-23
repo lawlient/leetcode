@@ -12,7 +12,14 @@
  *    []
  *  ]
  *  
- *  
+*/
+
+/*  1. []
+ *  2. [], [1]
+ *  3. [], [1], [2], [2, 2], [1, 2], [1, 2, 2]
+ *  every loop just think about one num,contains 1, 2, 3, ..., all
+ *
+ *
 */
 
 #include <iostream>
@@ -21,15 +28,37 @@
 #include <algorithm>
 #include <vector>
 #include <array>
+#include <unordered_map>
 #include <math.h>
 
 class Solution {
 public:
   std::vector<std::vector<int>> subsetsWithDup(std::vector<int> &nums) {
+    std::vector<std::vector<int>> res;
+    if (nums.empty()) return res;
+    std::unordered_map<int, int> index;
+    for (int i : nums) {
+      index[i]++;
+    }
+    res.push_back(std::vector<int>());  // []
+    for (const auto &pair : index) {
+      int size = res.size();
+      for (int j = 0; j < size; j++) {
+        auto v = res[j];
+        for (int i = 1; i <= pair.second; i++) {
+          v.push_back(pair.first);
+          res.push_back(v);
+        }
+      }
+    }
+    return res;
+  }
+
+  std::vector<std::vector<int>> subsetsWithDup2(std::vector<int> &nums) {
     std::sort(nums.begin(), nums.end());
     std::vector<std::vector<int>> res({{}});
     for (int i = 0; i < nums.size();) {
-      int count = 0;
+      int count = 1;
       while (count + i < nums.size() && nums[i + count] == nums[i]) count++;
       int prevN = res.size();
       for (int j = 0; j < prevN; j++) {

@@ -11,6 +11,12 @@
  *  
 */
 
+/*  dynamic program: s'[] note number of ways
+ *    s'[i] = s'[i-1] + s'[i-2]
+ *    if s[i] == 0 then s'[i-1] = 0
+ *
+*/
+
 #include <iostream>
 #include <climits>
 #include <algorithm>
@@ -22,7 +28,7 @@
 // DP
 class Solution {
 public:
-  int numDecodings(std::string s) {
+  int numDecodings2(std::string s) {
     int n = s.size();
     if (!n || s[0] == '0') return 0;
     int a = 1, b = 1;
@@ -41,8 +47,8 @@ public:
 
 int main() {
   Solution solute;
-  std::string p = "101";
-  auto res = solute.numDecodings(p);
+  std::string p = "10";
+  auto res = solute.numDecodings2(p);
   std::cout << res << "\n";
   return 0;
 }

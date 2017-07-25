@@ -28,16 +28,16 @@ struct TreeNode {
 };
 
 class Solution {
-  void inorderRecursive(TreeNode *root, std::vector<int> &res) {
-    if (root == nullptr) return;
-    inorderRecursive(root->left, res);
+  void help(TreeNode *root, std::vector<int> &res) {
+    if (!root) return;
+    if (root->left) help(root->left, res);
     res.push_back(root->val);
-    inorderRecursive(root->right, res);
+    if (root->right) help(root->right, res);
   }
 public:
   std::vector<int> inorderTraversal(TreeNode *root) {
     std::vector<int> res;
-    inorderRecursive(root, res);
+    help(root, res);
     return res;
   }
 };

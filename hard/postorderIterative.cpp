@@ -41,6 +41,29 @@ struct TreeNode {
 class Solution {
 public:
   std::vector<int> postorderTraversal(TreeNode *root) {
+    auto p = root;
+    TreeNode *pre = nullptr;
+    std::vector<int> res;
+    std::stack<TreeNode *> s;
+    while (p || !s.empty()) {
+      while (p) {
+        s.push(p);
+        p = p->left;
+      }
+      p = s.top();
+      if (p->right == NULL || p->right == pre) {
+        res.push_back(p->val);
+        s.pop();
+        pre = p;
+        p = nullptr;
+      } else {
+        p = p->right;
+      }
+    }
+    return res;
+  }
+  
+  std::vector<int> postorderTraversal2(TreeNode *root) {
     std::vector<int> res;
     std::stack<TreeNode *> s;
     if (!root) return res;

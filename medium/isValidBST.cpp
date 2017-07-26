@@ -26,7 +26,7 @@
 #include <climits>
 #include <assert.h>
 #include <algorithm>
-#include <vector>
+#include <stack>
 #include <array>
 #include <math.h>
 
@@ -39,26 +39,47 @@ struct TreeNode {
 
 class Solution {
 
-// may be can try preorder search
+// may be can try inorder search
 public:
   bool isValidBST(TreeNode *root) {
     if (!root) return true;
-    auto left = root->left, right = root->right;
-    if (!left && !right) return true;
-    auto l = right;
-    if (left) {
-      auto r = left;
-      while (r->right) r = r->right;
-      if (r->val >= root->val)
+    if (root->left) {
+      auto p = root->left;
+      while (p->right) p = p->right;
+      if (p->val >= root->val)
+        return false;
+      if (!isValidBST(root->left))
         return false;
     }
-    if (!isValidBST(left)) return false;
-    if (right) {
-      while (l->left) l = l->left;
-      if (l->val <= root->val)
+
+    if (root->right) {
+      auto p = root->right;
+      while (p->left) p = p->left;
+      if (p->val <= root->val)
+        return false;
+      if (!isValidBST(root->right))
         return false;
     }
-    if (!isValidBST(right)) return false;
+    return true;
+  }
+
+  // it is wrong
+  bool isValidBST2(TreeNode *root) {
+    std::stack<TreeNode *> visit;
+    if (root) visit.push(root);
+    int min = INT_MIN;
+    while (!visit.empty()) {
+      auto node = visit.top();
+      if (node->left) {
+        visit.push(node->left);
+        continue;
+      }
+      if (node->val <= min)
+        return false;
+      min = node->val;
+      visit.pop();
+      if (node->right) visit.push(node->right);
+    }
     return true;
   }
 };

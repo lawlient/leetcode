@@ -63,22 +63,22 @@ public:
     return true;
   }
 
-  // it is wrong
+  // inorder visit, the number should be increasing
   bool isValidBST2(TreeNode *root) {
     std::stack<TreeNode *> visit;
-    if (root) visit.push(root);
-    int min = INT_MIN;
-    while (!visit.empty()) {
-      auto node = visit.top();
-      if (node->left) {
-        visit.push(node->left);
+    long min = LONG_MIN;
+    while (root || !visit.empty()) {
+      if (root) {
+        visit.push(root);
+        root = root->left;
         continue;
       }
-      if (node->val <= min)
-        return false;
-      min = node->val;
+      root = visit.top();
       visit.pop();
-      if (node->right) visit.push(node->right);
+      if (root->val <= min)
+        return false;
+      min = root->val;
+      root = root->right;
     }
     return true;
   }

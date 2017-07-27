@@ -37,9 +37,8 @@ class Solution {
 public:
   std::vector<std::vector<int>> levelOrderBottom(TreeNode *root) {
     std::vector<std::vector<int>> res;
-    if (!root) return res;
     std::queue<TreeNode *> q;
-    q.push(root);
+    if (root) q.push(root);
     while (!q.empty()) {
       int size = q.size();
       std::vector<int> one;

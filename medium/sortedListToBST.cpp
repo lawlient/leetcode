@@ -27,6 +27,24 @@ struct TreeNode {
 class Solution {
 public:
   TreeNode *sortedListToBST(ListNode *head) {
+    if (!head) return nullptr;
+    if (!head->next) return new TreeNode(head->val);
+    auto p = head, q = head;
+    auto pp = head;
+    while (q && q->next) {
+      q = q->next;
+      pp = p;
+      p = p->next;
+      q = q->next;
+    }
+    pp->next = nullptr;
+    auto root = new TreeNode(p->val);
+    root->left = sortedListToBST(head);
+    root->right = sortedListToBST(p->next);
+    return root;
+  }
+
+  TreeNode *sortedListToBST2(ListNode *head) {
     if (!head) return NULL;
     if (head->next == nullptr) 
       return new TreeNode(head->val);

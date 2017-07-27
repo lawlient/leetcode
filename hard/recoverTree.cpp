@@ -45,6 +45,27 @@ public:
 
     std::swap(firstNode->val, secondNode->val);
   }
+
+  // non-recursively
+  void recoverTree(TreeNode *root) {
+    TreeNode help = TreeNode(INT_MIN);
+    TreeNode *p1 = NULL, *p2 = NULL, *pre = &help;
+    std::stack<TreeNode *> s;
+    while (root || !s.empty()) {
+      while (root) {
+        s.push(root);
+        root = root->left;
+      }
+      root = s.top(); s.pop();
+      if (root->val <= pre->val) {
+        if (!p1) p1 = pre;
+        if (p1) p2 = root;
+      }
+      pre = root;
+      root = root->right;
+    }
+    std::swap(p1->val, p2->val);
+  }
 };
 
 int main() {

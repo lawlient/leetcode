@@ -40,6 +40,23 @@ public:
     help(root, res);
     return res;
   }
+
+  // non-recursively
+  std::vector<int> inorderTraversal2(TreeNode *root) {
+    std::vector<int> res;
+    std::stack<TreeNode *> s;
+    while (root || !s.empty()) {
+      while (root) {
+        s.push(root);
+        root = root->left;
+      }
+      root = s.top();
+      s.pop();
+      res.push_back(root->val);
+      root = root->right;
+    }
+    return res;
+  }
 };
 
 int main() {

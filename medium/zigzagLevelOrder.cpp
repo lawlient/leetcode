@@ -41,22 +41,21 @@ class Solution {
 public:
   std::vector<std::vector<int>> zigzagLevelOrder(TreeNode *root) {
     std::vector<std::vector<int>> res;
-    if (!root) return res;
     std::queue<TreeNode *> q;
-    q.push(root);
-    bool isL2R = true;
+    if (root) q.push(root);
+    bool reverse = false;
     while (!q.empty()) {
       int size = q.size();
-      std::vector<int> one(size);
+      std::vector<int> solve;
       for (int i = 0; i < size; i++) {
         auto node = q.front(); q.pop();
-        int index = isL2R ? i : (size - 1 - i);
-        one[index] = node->val;
+        solve.push_back(node->val);
         if (node->left) q.push(node->left);
         if (node->right) q.push(node->right);
       }
-      isL2R = !isL2R;
-      res.push_back(one);
+      if (reverse) std::reverse(solve.begin(), solve.end());
+      reverse = !reverse;
+      res.push_back(solve);
     }
     return res;
   }

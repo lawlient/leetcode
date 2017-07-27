@@ -39,24 +39,18 @@ class Solution {
 public:
   std::vector<std::vector<int>> levelOrder(TreeNode *root) {
     std::vector<std::vector<int>> res;
-    if (!root) return res;
-    res.push_back(std::vector<int>(1, root->val));
     std::queue<TreeNode *> q;
-    if (root->left) q.push(root->left);
-    if (root->right) q.push(root->right);
-    int size = q.size();
-    std::vector<int> oneL;
-    for (int i = 0; i < size; i++) {
-      auto node = q.front(); q.pop();
-      oneL.push_back(node->val);
-      if (node->left) q.push(node->left);
-      if (node->right) q.push(node->right);
-      if (i+1 == size) {
-        res.push_back(oneL);
-        oneL.clear();
-        size = q.size();
-        i = -1;
+    if (root) q.push(root);
+    while (!q.empty()) {
+      int size = q.size();
+      std::vector<int> solve;
+      for (int i = 0; i < size; i++) {
+        auto node = q.front(); q.pop();
+        solve.push_back(node->val);
+        if (node->left) q.push(node->left);
+        if (node->right) q.push(node->right);
       }
+      res.push_back(solve);
     }
     return res;
   }

@@ -5,6 +5,16 @@
  * 
 */
 
+
+/*  non-recursive
+ *  1. create root
+ *  2. create right child first
+ *  3. create left child inverted order
+ *  so we need a stack to record right node
+ *
+ *
+*/
+
 #include <iostream>
 #include <climits>
 #include <assert.h>
@@ -12,6 +22,7 @@
 #include <vector>
 #include <array>
 #include <map>
+#include <stack>
 #include <queue>
 #include <math.h>
 
@@ -39,6 +50,33 @@ public:
     for (size_t i = 0; i < postorder.size(); i++)
       postIndex[inorder[i]] = i;
     return buildTreeRec(inorder, 0, inorder.size()-1, postorder, 0, postorder.size()-1);
+  }
+
+  TreeNode *buildTree2(std::vector<int> &inorder, std::vector<int> &postorder) {
+    if (postorder.empty()) return nullptr;
+    auto root = new TreeNode(postorder.back());
+    std::stack<TreeNode *> s; s.push(root);
+    int i = postorder.size() - 2;
+    int j = inorder.size() - 1;
+    auto t = root;
+    bool rightInsert = true;
+    while (i >= 0) {
+      if (!s.empty() && s.top()->val == inorder[j]) {
+        t = s.top(); s.pop();
+        rightInsert = false;
+        j--;
+      } else {
+        if (rightInsert) {
+          t = t->right = new TreeNode(postorder[i]);
+        } else {
+          t = t->left = new TreeNode(postorder[i]);
+          rightInsert = true;
+        }
+        s.push(t);
+        i--;
+      }
+    }
+    return root;
   }
 };
 

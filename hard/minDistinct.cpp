@@ -28,18 +28,18 @@ struct TreeNode {
 class Solution {
 public:
   int numDistinct(std::string s, std::string t) {
-    int m = s.size(), n = t.size();
-    std::vector<int> tmp(n+1, 0);
-    for (int j = 0; j <= m; j++) tmp[j] = 1;
-
-    for (int i = 0; i < n; i++) {
-      std::vector<int> next(n+1, 0);
-      for (int j = 0; j < m; j++)
-        next[j+1] = next[j] + ((t[i] == s[j]) ? tmp[j] : 0);
-      std::swap(tmp, next);
+    int m = t.size(), n = s.size();
+    int index[m+1][n+1];
+    for (int j = 0; j <= n; j++) index[0][j] = 1;
+    for (int i = 1; i <= m; i++) index[i][0] = 0;
+    for (int i = 1; i <= m; i++) {
+      for (int j = 1; j <= n; j++) {
+        index[i][j] = index[i][j-1];
+        if (t[i-1] == s[j-1])
+          index[i][j] += index[i-1][j-1];
+      }
     }
-
-    return tmp[m];
+    return index[m][n];
   }
 };
 

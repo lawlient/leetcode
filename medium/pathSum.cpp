@@ -36,22 +36,20 @@ struct TreeNode {
 };
 
 class Solution {
-  void solveRec(std::vector<std::vector<int>> &res, std::vector<int> &solve, TreeNode *root, int sum) {
-    solve.push_back(root->val);
-    if (!root->left && !root->right)
-      if (root->val == sum)
-        res.push_back(solve);
-
-    if (root->left) solveRec(res, solve, root->left, sum-root->val);
-    if (root->right) solveRec(res, solve, root->right, sum-root->val);
-    solve.pop_back();
+  void help(std::vector<std::vector<int>> &res, std::vector<int> &one, TreeNode *root, int sum) {
+    one.push_back(root->val);
+    if (!root->left && !root->right && root->val == sum)
+      res.push_back(one);
+    if (root->left) help(res, one, root->left, sum - root->val);
+    if (root->right) help(res, one, root->right, sum - root->val);
+    one.pop_back();
   }
 public:
   std::vector<std::vector<int>> pathSum(TreeNode *root, int sum) {
     std::vector<std::vector<int>> res;
     if (!root) return res;
     std::vector<int> solve;
-    solveRec(res, solve, root, sum);
+    help(res, solve, root, sum);
     return res;
   }
 };

@@ -43,20 +43,28 @@
 struct TreeLinkNode {
   int val;
   TreeLinkNode *left, *right, *next;
-  TreeLinkNode(int x) : val(x), left(NULL), right(NULL) {}
-};
-
-struct TreeNode {
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
 };
 
 // dynamic programming
 class Solution {
 public:
   void connect(TreeLinkNode *root) {
+    std::queue<TreeLinkNode *> s;
+    if (root) s.push(root);
+    while (!s.empty()) {
+      int size = s.size();
+      for (int i = 0; i < size; i++) {
+        auto node = s.front(); s.pop();
+        if (i < size - 1) node->next = s.front();
+        if (node->left) s.push(node->left);
+        if (node->right) s.push(node->right);
+      }
+    }
+  }
+
+  // constant extra space
+  void connect2(TreeLinkNode *root) {
     if (!root) return;
     auto pre = root;
     auto cur = pre;

@@ -43,6 +43,19 @@ struct TreeNode {
 class Solution {
 public:
   void flatten(TreeNode *root) {
+    if (!root) return;
+    if (!root->left && !root->right) return;
+    auto p = root->left;
+    if (p) {
+      while (p->right) p = p->right;
+      p->right = root->right;
+      root->right = root->left;
+      root->left = nullptr;
+    }
+    flatten(root->right);
+  }
+
+  void flatten2(TreeNode *root) {
     while (root) {
       if (root->left && root->right) {
         auto t = root->left;

@@ -92,6 +92,32 @@ public:
     }
     return res;
   }
+
+  // level order
+  int sumNumbers3(TreeNode *root) {
+    std::queue<TreeNode *> q;
+    int res = 0;
+    if (root) q.push(root);
+    while (!q.empty()) {
+      int size = q.size();
+      for (int i = 0; i < size; i++) {
+        auto node = q.front(); q.pop();
+        if (!node->left && !node->right) {
+          res += node->val;
+        }
+        node->val *= 10;
+        if (node->left) {
+          node->left->val += node->val;
+          q.push(node->left);
+        }
+        if (node->right) {
+          node->right->val += node->val;
+          q.push(node->right);
+        }
+      }
+    }
+    return res;
+  }
 };
 
 int main() {

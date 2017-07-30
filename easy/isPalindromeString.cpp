@@ -29,10 +29,10 @@ struct TreeNode {
 class Solution {
 public:
   bool isPalindrome(std::string s) {
-    int i = 0, j = s.size()-1;
-    while (j > i) {
-      while (!std::isalnum(s[i]) && i < j) i++;
-      while (!std::isalnum(s[j]) && i < j) j--;
+    int i = 0, j = s.length() - 1;
+    while (i < j) {
+      while (i < j && !std::isalnum(s[i])) i++;
+      while (i < j && !std::isalnum(s[j])) j--;
       if (std::toupper(s[i]) != std::toupper(s[j]))
         return false;
       i++;

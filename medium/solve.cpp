@@ -63,18 +63,12 @@ public:
       check(board, 0, j);
       if (row > 1) check(board, row-1, j);
     }
-    for (auto &line : board) {
-      for (auto &c : line) {
-        if (c == 'O')
-          c = 'X';
-      }
-    }
-    for (auto &line : board) {
-      for (auto &c : line) {
-        if (c == '1')
-          c = 'O';
-      }
-    }
+    
+    for (auto &line : board)
+      std::replace(line.begin(), line.end(), 'O', 'X');
+
+    for (auto &line : board)
+      std::replace(line.begin(), line.end(), '1', 'O');
   }
 };
 

@@ -22,13 +22,6 @@
 #include <map>
 #include <queue>
 
-struct TreeNode {
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
-
 class Solution {
 public:
   int maxProfit(std::vector<int> &prices) {

@@ -34,6 +34,19 @@ struct TreeNode {
 class Solution {
 public:
   int minimumTotal(std::vector<std::vector<int>> &triangle) {
+    for (int i = 1; i <triangle.size(); i++) {
+      auto &tmp = triangle[i-1];
+      for (int j = 1; j < i; j++) {
+        triangle[i][j] += std::min(tmp[j-1], tmp[j]);
+      }
+      triangle[i][0] = triangle[i][0] + tmp[0];
+      triangle[i][i] = triangle[i].back() + tmp.back();
+    }
+    return *std::min_element(triangle.back().begin(), triangle.back().end());
+  }
+
+  // calculate from bottom to top
+  int minimumTotal2(std::vector<std::vector<int>> &triangle) {
     std::vector<int> minLen(triangle.back());
     for (int layer = triangle.size() - 2; layer >= 0; layer--)
       for (int i = 0; i <= layer; i++)

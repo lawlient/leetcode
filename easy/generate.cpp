@@ -30,6 +30,23 @@ struct TreeNode {
 class Solution {
 public:
   std::vector<std::vector<int>> generate(int numRows) {
+    std::vector<std::vector<int>>  res;
+    if (numRows == 0) return res;
+    res.push_back({1});
+    for (int i = 1; i < numRows; i++) {
+      std::vector<int> one{1};
+      auto &lastLine = res.back();
+      lastLine.push_back(0);
+      for (int j = 0; j < i; j++) {
+        one.push_back(lastLine[j] + lastLine[j+1]);
+      }
+      lastLine.pop_back();
+      res.push_back(one);
+    }
+    return res;
+  }
+
+  std::vector<std::vector<int>> generate2(int numRows) {
     std::vector<std::vector<int>> res;
     if (numRows == 0) return res;
     res.push_back(std::vector<int>(1, 1));

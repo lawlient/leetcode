@@ -28,6 +28,17 @@ struct TreeNode {
 class Solution {
 public:
   std::vector<int> getRow(int rowIndex) {
+    std::vector<int> res(rowIndex+1, 1);
+    long c = rowIndex / 1;
+    for (int i = 1; i <= rowIndex / 2; i++) {
+      res[i] =  res[rowIndex-i] = c;
+      c *= rowIndex-i;
+      c /= i + 1;
+    }
+    return res;
+  }
+
+  std::vector<int> getRow2(int rowIndex) {
     std::vector<int> res(1, 1);
     for (int i = 1; i < rowIndex+1; i++) {
       std::vector<int> nextL(i+1, 1);
@@ -42,7 +53,7 @@ public:
 
 int main() {
   Solution solute;
-  auto res = solute.getRow(3);
+  auto res = solute.getRow(4);
   for (auto i : res) 
     std::cout << i << "\t";
   std::cout << std::endl;

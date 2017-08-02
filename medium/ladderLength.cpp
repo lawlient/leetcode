@@ -43,8 +43,43 @@
 #include <list>
 
 class Solution {
+  bool isTransformation(const std::string &a, const std::string &b) {
+    int diff = 0;
+    for (int i = 0; i < a.size(); i++) {
+      if (a[i] != b[i]) {
+        if (diff > 1)
+          return false;
+        else 
+          diff++;
+      }
+    }
+    return diff == 1;
+  }
 public:
   int ladderLength(std::string beginWord, std::string endWord, std::vector<std::string> &wordList) {
+    int step = 1;
+    auto endPos = std::find(wordList.begin(), wordList.end(), endWord);
+    if (endPos == wordList.end())
+      return false;
+
+    std::vector<std::string> endSet{beginWord};
+    while (!endSet.empty() && !wordList.empty()) {
+      step++;
+      std::vector<std::string> tmp; // next beginWord
+      for (const auto &b : endSet) {
+        for (int j = 0; j < wordList.size(); j++) {
+          if (isTransformation(b, wordList[j])) {
+            if (wordList[j] == endWord)
+              return step;
+            tmp.push_back(wordList[j]);
+            wordList.erase(wordList.begin()+j);
+            j--;
+          }
+        }
+      }
+      std::swap(tmp, endSet);
+    }
+    return 0;
   }
 };
 

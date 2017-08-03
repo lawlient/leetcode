@@ -32,29 +32,48 @@ struct TreeNode {
 
 class Solution {
   void help(TreeNode *root) {
-    if (!root) return;
-    if (!root->left && !root->right)
+    if (!root->left && !root->right) {
       index[root].first = index[root].second = root->val;
-    if (root->left) {
-      help(root->left);
-      index[root].first = std::max(index[root->left].first, index[root->left].second) + root->val;
+      max = std::max(max, root->val);
+      return;
     }
-    if (root->right) {
-      help(root->right);
-      index[root].second = std::max(index[root->right].first, index[root->right].second) + root->val;
+    auto lc = root->left;
+    auto rc = root->right;
+    if (lc) {
+      help(lc);
+      int maxlChild = std::max(index[lc].first, index[lc].second);
+      index[root].first = root->val + (maxlChild > 0 ? maxlChild : 0);
+    } else {
+      index[root].first = root->val;
     }
-    int s = index[root].first + index[root].second - root->val;
-    int half = std::max(index[root].first, index[root->right].second);
-    int all  = std::max(half, s);
-    max = std::max(max, all);
+    if (rc) {
+      help(rc);
+      int maxrChild = std::max(index[rc].first, index[rc].second);
+      index[root].second = root->val + (maxrChild > 0 ? maxrChild : 0);
+    } else {
+      index[root].second = root->val;
+    }
+    max = std::max(max, root->val);
+    max = std::max(max, index[root].first);
+    max = std::max(max, index[root].second);
+    max = std::max(max, index[root].first + index[root].second - root->val);
   }
 
   int max;
   std::map<TreeNode *, std::pair<int, int>> index;
 public:
   int maxPathSum(TreeNode *root) {
-    max = 0;
+    if (!root) return 0;
+    max = INT_MIN;
     help(root);
     return max;
   }
 };
+
+int main() {
+  auto tree = new TreeNode(1);
+  tree->left = new TreeNode(2);
+  tree->right = new TreeNode(3);
+  std::cout << Solution().maxPathSum(tree) << std::endl;
+  return 0;
+}

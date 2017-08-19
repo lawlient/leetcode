@@ -71,6 +71,7 @@ class Solution {
         wordList.erase(w);
       }
     }
+    if (nextBegin.empty()) return;
     if (nextBegin.count(endWord)) {
       one.push_back(endWord);
       res.push_back(one);

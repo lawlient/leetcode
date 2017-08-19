@@ -30,20 +30,18 @@
 class Solution {
 public:
   int canCompleteCircuit(std::vector<int> &gas, std::vector<int> &cost) {
-      int start = gas.size()-1;
-       int end = 0;
-       int sum = gas[start] - cost[start];
-       while (start > end) {
-          if (sum >= 0) {
-             sum += gas[end] - cost[end];
-             ++end;
-          }
-          else {
-             --start;
-             sum += gas[start] - cost[start];
-          }
-       }
-       return sum >= 0 ? start : -1;
+    int end = 0, start = gas.size() - 1;
+    int r = gas[start] - cost[start];
+    while (start > end) {
+      if (r >= 0) {
+        r += gas[end] - cost[end];
+        end++;
+      } else {
+        start--;
+        r += gas[start] - cost[start];
+      }
+    }
+    return r >= 0 ? start : -1;
   }
 };
 

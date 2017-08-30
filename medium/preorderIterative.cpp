@@ -59,11 +59,10 @@ public:
     std::vector<int> res;
     std::stack<TreeNode *> s;
     while (root || !s.empty()) {
-      if (root) {
+      while (root) {
         res.push_back(root->val);
         s.push(root);
         root = root->left;
-        continue;
       }
       root = s.top()->right;
       s.pop();

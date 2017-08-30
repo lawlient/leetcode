@@ -12,15 +12,9 @@
 #include <vector>
 #include <array>
 #include <map>
+#include <unordered_map>
 #include <queue>
 #include <math.h>
-
-struct TreeNode {
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 
 class Solution {
 public:
@@ -29,10 +23,20 @@ public:
     for (const auto &i : nums) {
       ones = (ones ^ i) & ~twos;
       twos = (twos ^ i) & ~ones;
-      std::cout << "ones = " << ones << "\t"
-                << "twos = " << twos << std::endl;
     }
     return ones;
+  }
+
+  int singleNumber2(std::vector<int> &nums) {
+    std::unordered_map<int, int> index;
+    for (const auto &n : nums) {
+      index[n]++;
+    }
+    for (const auto &pair : index) {
+      if (pair.second == 1)
+        return pair.first;
+    }
+    return 0;
   }
 };
 
